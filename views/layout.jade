@@ -1,7 +1,21 @@
 doctype html
-html
-  head
-    title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
-  body
-    block content
+html(lang="en")
+	head
+		meta(charset='utf8')
+		meta(name='viewport', content='width=device-width, initial-scale=1')
+		meta(name='description', content='Read: reh-suh-pee. For when you\'re low on food in the fridge and don\'t want to go out!')
+		meta(name='keywords', content='cooking, food, ingredients')
+		meta(name='author', content='Sara Tang <sara_z_tang@yahoo.ca>')
+		
+		title Reasipe | Easy recipes!
+
+		link(rel='stylesheet', href='/stylesheets/style.css')
+		link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css')
+
+	body
+		block content
+
+		div(id="footer")
+			p(class="text-center") Powered by 
+				a(href="http://www.food2fork.com" target="_blank") food2fork.com
+		script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js")

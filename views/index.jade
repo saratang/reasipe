@@ -1,5 +1,13 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+	div(class='container-fluid')
+		div(class='jumbotron')
+			h1 Reasipe: recipes made easy
+			div(class='row')
+				p Please separate ingredients by comma or semicolon:
+				div(class='input-group')
+					input(type='text' class='form-control' placeholder='I have...')
+					span(class='input-group-btn')
+						button(class='btn btn-default' type='button')
+							span(class='glyphicon glyphicon-search')
