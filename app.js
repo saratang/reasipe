@@ -4,6 +4,8 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var config = require('./config');
+var request = require('request');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -26,6 +28,41 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/users', users);
 
+app.get("/searching", function(req, res) {
+  var query = req.query.search;
+
+  var url = "http://food2fork.com/api/search?key=" + config.token
+            + "&q=" + query;
+  //console.log(url);
+
+  request(url, function(err, resp, body) {
+    if (err) {
+      return console.error(err);
+    }
+
+    var body = JSON.parse(body);
+
+    // console.log(body);
+    var recipes = "";
+
+    if (body.count == 0) {
+      recipes += "Sorry, no recipes were found! Try again with different ingredients.";
+    } else {
+      recipes_list = body.recipes;
+      // console.log(recipes_list);
+      recipes += "<ul>";
+      for (var i = 0; i < body.count; i++) {
+        recipes += "<li><b>" + 
+                    "<a href='" + recipes_list[i].source_url + "' target='_blank'>"
+                    + recipes_list[i].title + "</a></b></li>";
+      }
+      recipes += "</ul>";
+      // console.log(recipes);
+    }
+    res.send(recipes);
+  });
+});
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
@@ -46,10 +83,6 @@ if (app.get('env') === 'development') {
     });
   });
 }
-
-// app.get("/", function(req, res) {
-//   res.render("index");
-// })
 
 // production error handler
 // no stacktraces leaked to user
